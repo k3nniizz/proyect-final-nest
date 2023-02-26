@@ -18,10 +18,10 @@ import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Get('tasks')
-  tasks() {
-    return this.usersService.getTasks();
-  }
+  // @Get('tasks')
+  // tasks() {
+  //   return this.usersService.getTasks();
+  // }
 
   @Get()
   findAll() {

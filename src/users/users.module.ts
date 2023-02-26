@@ -1,14 +1,17 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './services/users.service';
-import { CustomersService } from './services/customers.service';
-import { CustomersController } from './controllers/customers.controller';
-import { UsersController } from './controllers/users.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { UsersController } from './controllers/users.controller';
+import { UsersService } from './services/users.service';
+import { User } from './entities/user.entity';
+import { CustomersController } from './controllers/customers.controller';
+import { CustomersService } from './services/customers.service';
+import { Customer } from './entities/customer.entity';
 import { ProductsModule } from '../products/products.module';
 
 @Module({
   //importa modulo pruduct para ocupar product service.
-  imports: [ProductsModule],
+  imports: [ProductsModule, TypeOrmModule.forFeature([User, Customer])],
   providers: [UsersService, CustomersService],
   controllers: [CustomersController, UsersController],
 })
