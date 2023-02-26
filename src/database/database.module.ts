@@ -1,7 +1,22 @@
 import { Module, Global } from '@nestjs/common';
+import { Client } from 'pg';
 
 const API_KEY = '12345634';
 const API_KEY_PROD = 'PROD1212121SA';
+
+const client = new Client({
+  user: 'kenny',
+  host: 'localhost',
+  database: 'my_db',
+  password: 'postgres',
+  port: 5432,
+});
+//coneccions
+client.connect();
+client.query('SELECT * FROM tasks', (err, res) => {
+  console.error(err);
+  console.log(res.rows);
+});
 
 @Global()
 @Module({
