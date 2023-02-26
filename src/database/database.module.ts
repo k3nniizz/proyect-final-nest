@@ -13,10 +13,10 @@ const client = new Client({
 });
 //coneccions
 client.connect();
-client.query('SELECT * FROM tasks', (err, res) => {
-  console.error(err);
-  console.log(res.rows);
-});
+// client.query('SELECT * FROM tasks', (err, res) => {
+//   console.error(err);
+//   console.log(res.rows);
+// });
 
 @Global()
 @Module({
@@ -25,7 +25,11 @@ client.query('SELECT * FROM tasks', (err, res) => {
       provide: 'API_KEY',
       useValue: process.env.NODE_ENV === 'prod' ? API_KEY_PROD : API_KEY,
     },
+    {
+      provide: 'PG',
+      useValue: client,
+    },
   ],
-  exports: ['API_KEY'],
+  exports: ['API_KEY', 'PG'],
 })
 export class DatabaseModule {}
