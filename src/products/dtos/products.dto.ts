@@ -8,12 +8,13 @@ import {
 } from 'class-validator';
 // ayuda a resicar codigo permitiendo tomar las vaidaciones de la clase createproduct y extenderla
 // de forma opcional en update product
-import { PartialType } from '@nestjs/swagger';
+import { PartialType, ApiProperty } from '@nestjs/swagger';
 
 //valida datos en desarrollo
 export class CreateProductDTO {
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
   readonly name: string;
   @IsString()
   @IsNotEmpty()

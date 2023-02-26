@@ -25,6 +25,7 @@ const API_KEY_PROD = 'PROD1212121SA';
 @Global()
 @Module({
   imports: [
+    //coneccion de typeorm la hace por interno, despues generar entidades
     TypeOrmModule.forRootAsync({
       inject: [config.KEY],
       useFactory: (configService: ConfigType<typeof config>) => {
@@ -36,6 +37,8 @@ const API_KEY_PROD = 'PROD1212121SA';
           username: user,
           password,
           database: dbName,
+          synchronize: true,
+          autoLoadEntities: true,
         };
       },
     }),
@@ -56,8 +59,8 @@ const API_KEY_PROD = 'PROD1212121SA';
           password,
           port,
         });
-        client.connect();
-        return client;
+        // client.connect();
+        // return client;
       },
       inject: [config.KEY],
     },
