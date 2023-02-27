@@ -9,6 +9,7 @@ import { Order } from '../entities/order.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
 import { ProductsService } from './../../products/services/products.service';
+import { CustomersService } from './customers.service';
 import { ConfigService } from '@nestjs/config';
 import { Console } from 'console';
 
@@ -16,13 +17,17 @@ import { Console } from 'console';
 export class UsersService {
   constructor(
     private productsService: ProductsService,
+    private customersService: CustomersService,
     private configService: ConfigService,
     @Inject('PG') private clientPg: Client,
     @InjectRepository(User) private userRepo: Repository<User>,
   ) {}
 
   findAll() {
-    return this.userRepo.find();
+    return this.userRepo.find({
+      //agregar relacion uno a uno
+      relations: ['customer'],
+    });
   }
 
   async findOne(id: number) {
@@ -33,8 +38,12 @@ export class UsersService {
     return user;
   }
 
-  create(data: CreateUserDto) {
+  async create(data: CreateUserDto) {
     const newuser = this.userRepo.create(data);
+    if (data.customerId) {
+      const customer = await this.customersService.findOne(data.customerId);
+      newuser.customer = customer;
+    }
 
     return this.userRepo.save(newuser);
   }

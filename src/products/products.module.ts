@@ -16,6 +16,6 @@ import { Brand } from './entities/brand.entity';
   controllers: [ProductsController, CategoriesController, BrandsController],
   providers: [ProductsService, CategoriesService, BrandsService],
   // exporta producservice para ocupar en users, para order
-  exports: [ProductsService],
+  exports: [ProductsService, TypeOrmModule],
 })
 export class ProductsModule {}
